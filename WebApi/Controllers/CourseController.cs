@@ -29,22 +29,28 @@ namespace WebApi.Controllers
         {
             JsonResult res = new(new { });
             var courseList = await _courseManager.PopularCourses();
-            var _mapperCourse = _mapper.Map<CourseListDTO>(courseList);
+            var _mapperCourse = _mapper.Map<List <CourseListDTO>>(courseList);
             res.Value = _mapperCourse;
             return res;
         }
 
         // GET api/<CourseController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public CourseDetailDTO? Get(int? id)
         {
-            return "value";
+            if(!id.HasValue) return null;
+            var singleCourse = _courseManager.CourseId(id.Value);
+            var _courseMapper=_mapper.Map<CourseDetailDTO>(singleCourse);
+
+            return _courseMapper;
         }
 
         // POST api/<CourseController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public  async Task Post([FromBody] CourseDetailDTO courseDetailDTO)
         {
+            var _mapperCourse=_mapper.Map<Course>(courseDetailDTO);
+            await _courseManager.CourseAdded(_mapperCourse);
         }
 
         // PUT api/<CourseController>/5

@@ -11,5 +11,7 @@ namespace DataAccess.Abstract
     public interface ICourseDal:IEntityRepository<Course>
     {
         public Task<IEnumerable<Course>> GetPopularCourses();
+        public Task<Course> GetCourseById(int id);
+        public Task AddCourse(Course course);
     }
 }

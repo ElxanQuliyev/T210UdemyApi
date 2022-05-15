@@ -10,5 +10,7 @@ namespace Business.Abstract
     public interface ICourseManager
     {
         public Task<IEnumerable<Course>> PopularCourses();
+        public Task<Course> CourseId(int id);
+        public Task CourseAdded(Course course);
     }
 }
